@@ -2,39 +2,39 @@
 
 ## Introduction
 
-*fastStructure* is a fast algorithm for inferring population structure from large SNP genotype data. 
-It is based on a variational Bayesian framework for posterior inference and is written in Python2.x. 
-Here, we summarize how to setup this software package, compile the C and Cython scripts and run 
+*fastStructure* is a fast algorithm for inferring population structure from large SNP genotype data.
+It is based on a variational Bayesian framework for posterior inference and is written in Python2.x.
+Here, we summarize how to setup this software package, compile the C and Cython scripts and run
 the algorithm on a test simulated genotype dataset.
 
 ## Citation
 
-Anil Raj, Matthew Stephens, and Jonathan K. Pritchard. *fastSTRUCTURE: Variational Inference of 
+Anil Raj, Matthew Stephens, and Jonathan K. Pritchard. *fastSTRUCTURE: Variational Inference of
 Population Structure in Large SNP Data Sets*, (Genetics) June 2014 197:573-589
 [[Genetics](www.genetics.org/content/197/2/573.full),
 [Biorxiv](biorxiv.org/content/early/2013/12/02/001073)]
 
-## Parts 
+## Parts
 
 This repo has two components: a library of C and Cython scripts in *vars* and
 a set of Cython and pure Python scripts to load the data and run the algorithm.
 
 ## Dependencies
 
-*fastStructure* depends on 
+*fastStructure* depends on
 + [Numpy](http://www.numpy.org/)
 + [Scipy](http://www.scipy.org/)
 + [Cython](http://cython.org/)
 + [GNU Scientific Library](http://www.gnu.org/software/gsl/)
 
 A number of python distributions already have the first three modules packaged in them. It is also
-straightforward to install all these dependencies 
+straightforward to install all these dependencies
  (1) using package managers for MACOSX and several Linux distributions,
  (2) from platform-specific binary packages, and
  (3) directly from source
 
 Here are detailed instructions for installing these dependencies, provided by
-Thierry Gosselin from Université Laval, Québec. These instructions were 
+Thierry Gosselin from Université Laval, Québec. These instructions were
 tested on Mac OS 10.8 (Mountain Lion), 10.9 (Mavericks) and 10.10 (Yosemite). Similar steps
 will also work on other Unix/Linux distributions. (Note that the latest
 versions of Cython and GSL can be different from those below.)
@@ -130,8 +130,8 @@ To compile the main cython scripts, you can do the following:
     python setup.py build_ext --inplace
 
 Each setup will create some .c and .so (shared object) files.
-This setup may give some warnings, which are OK. If you get errors that indicate the 
-build failed, this might be because the wrong compiler is being used or 
+This setup may give some warnings, which are OK. If you get errors that indicate the
+build failed, this might be because the wrong compiler is being used or
 environment variables (like LD_LIBRARY_PATH) are set incorrectly. To use a specific
 gcc compiler, you can do the following:
 
@@ -139,7 +139,7 @@ gcc compiler, you can do the following:
 
 ## Executing the code
 
-The main script you will need to execute is `structure.py`. To see command-line 
+The main script you will need to execute is `structure.py`. To see command-line
 options that need to be passed to the script, you can do the following:
 
     $ python structure.py
@@ -167,7 +167,7 @@ via the flags listed above.
 
 The key options to pass to the scripts are the input file, the output file and the number of populations.
 Assuming the input file is named `genotypes.bed` (with corresponding `genotypes.fam` and `genotypes.bim`),
-the output file is named `genotypes_output` and the number of populations you would like is 3, 
+the output file is named `genotypes_output` and the number of populations you would like is 3,
 you can run the algorithm as follows:
 
     python structure.py -K 3 --input=genotypes --output=genotypes_output
@@ -213,7 +213,7 @@ A test simulated dataset is provided in `test/testdata.bed` with genotypes sampl
     Total time = 4.7611 seconds
     Total iterations = 160
 
-Executing the code with the provided test data should generate a log file identical to the ones in `test/`, 
+Executing the code with the provided test data should generate a log file identical to the ones in `test/`,
 as a final check that the source code has been downloaded and compiled correctly. The algorithm scales
 linearly with number of samples, number of loci and value of K; the expected runtime for a new dataset can be
 computed from the runtime in the above log file.
@@ -260,3 +260,8 @@ the output flag was --output=test/testoutput_simple, you can generate a Distruct
 by doing the following:
 
     $ python distruct.py -K 5 --input=test/testoutput_simple --output=test/testoutput_simple_distruct.svg
+
+# Files added
+- `plink` is a command that converts `.ped` files to `.bed` files that fastStructure can read. 
+- `structure_to_plink.py` converts `.stru` files downloaded from [HGDP](http://rosenberglab.stanford.edu/hgdpsnpDownload.html) to `.ped` files. 
+See `./structure_to_plink.sh` for usage. 
