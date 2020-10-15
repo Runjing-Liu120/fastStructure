@@ -1,13 +1,27 @@
 #!/bin/bash
 
+downloads_folder='./hgdp_data/HuangEtAl_2011-GenetEpi/'
+processed_folder='./hgdp_data/huang2011_plink_files/'
+filename='phased_HGDP+India+Africa_2810SNPs-regions1to36'
+
 # convert from .stru to .ped
+echo 'structure to ped'
 python structure_to_plink.py \
-        --input_file=./hgdp_data/HuangEtAl_2011-GenetEpi/phased_HGDP+India+Africa_2810SNPs-regions1to36.stru \
-        --output_file=./hgdp_data/huang2011_plink_files/phased_HGDP+India+Africa_2810SNPs-regions1to36
+        --input_file=${downloads_folder}${filename}.stru
+        --output_file=${processed_folder}${filename}
 
 
 # convert from .ped to .bed
-./plink --file ./hgdp_data/huang2011_plink_files/phased_HGDP+India+Africa_2810SNPs-regions1to36 \
+echo 'ped to bed'
+./plink --file ${processed_folder}${filename} \
 	--make-bed \
-	--out ./hgdp_data/huang2011_plink_files/phased_HGDP+India+Africa_2810SNPs-regions1to36 
+	--out ${processed_folder}${filename}
 
+# convert .bed files to numpy
+echo 'bed to np array'
+python plink_to_numpy.py \
+	--input ${processed_folder}${filename} \
+	--output ${processed_folder}${filename}
+
+echo 'done.'
+echo 'check '${processed_folder}' for output'

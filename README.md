@@ -263,5 +263,6 @@ by doing the following:
 
 # Files added
 - `plink` is a command that converts `.ped` files to `.bed` files that fastStructure can read. 
-- `structure_to_plink.py` converts `.stru` files downloaded from [HGDP](http://rosenberglab.stanford.edu/hgdpsnpDownload.html) to `.ped` files. 
-See `./structure_to_plink.sh` for usage. 
+- `structure_to_plink.py` converts `.stru` files downloaded from [HGDP](http://rosenberglab.stanford.edu/hgdpsnpDownload.html) to `.ped` files.
+- `plink_to_numpy.py` converts `bed` files to a numpy array, and saves the array as a `.npz` file.  
+- See `./structure_to_plink.sh` for usage.

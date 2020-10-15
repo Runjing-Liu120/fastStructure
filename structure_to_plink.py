@@ -1,6 +1,5 @@
 #!/usr/bin/python
 #
-# Convert a structure file into a set of plink files readable by fastStructure.
 
 import csv
 import string
