@@ -11,6 +11,10 @@ import getopt
 import sys
 import pdb
 
+def get_one_hot(targets, nb_classes):
+    res = np.eye(nb_classes)[np.array(targets).reshape(-1)]
+    return res.reshape(list(targets.shape)+[nb_classes])
+
 def parseopts(opts):
 
     """
@@ -93,8 +97,17 @@ if __name__=="__main__":
     elif params['format']=='str':
         G = parse_str.load(params['inputfile'])
 
-    np.save(params['outputfile'], G)
-    
+    # convert to one-hot encoding
+    G_one_hot = get_one_hot(G, nb_classes = 4)
+    # G = 3 means that data is missing
+    # see https://github.com/rajanil/fastStructure/blob/master/parse_bed.pyx
+    # one-hot-encoding will be all zeros -- won't enter the loglikelihood
+    # so we only take the first three columns of the one-hot-encoding
+    G_one_hot = G_one_hot[:, :, 0:3]
+    np.savez(params['outputfile'],
+                g_obs_raw=G,
+                g_obs = G_one_hot)
+
     # # Write the genome file.
     # handle = open('%s.genome' % (params['outputfile']), 'w')
     # handle.write('\n'.join(['  '.join(['%d' % i for i in g]) for g in G])+'\n')

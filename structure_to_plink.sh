@@ -7,7 +7,7 @@ filename='phased_HGDP+India+Africa_2810SNPs-regions1to36'
 # convert from .stru to .ped
 echo 'structure to ped'
 python structure_to_plink.py \
-        --input_file=${downloads_folder}${filename}.stru
+        --input_file=${downloads_folder}${filename}.stru \
         --output_file=${processed_folder}${filename}
 
 
